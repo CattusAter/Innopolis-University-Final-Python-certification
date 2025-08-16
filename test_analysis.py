@@ -1,85 +1,153 @@
 import unittest
-import os
-import pandas as pd
 from unittest.mock import patch
-from datetime import datetime
-from models import Client, Product, Order
-from db import create_db, add_client, add_product, add_order, get_all_clients, get_all_products, get_all_orders
-from analysis import top_clients, sales_dynamics, top_products, client_graph
+import pandas as pd
+import networkx as nx
+from analysis import top_clients, top_products, sales_dynamics, client_graph
 
 class TestAnalysis(unittest.TestCase):
     def setUp(self):
-        """Инициализирует временную БД и тестовые данные."""
+        """Инициализирует тестовые данные."""
         self.db_file = "test_store.db"
-        create_db(self.db_file)
-        self.clients = [
-            Client(1, "Иван Иванов", "ivan@example.com", "+79991234567"),
-            Client(2, "Анна Петрова", "anna@example.com", "+79997654321")
-        ]
-        self.products = [
-            Product(1, "Ноутбук", 50000),
-            Product(2, "Телефон", 30000)
-        ]
-        self.orders = [
-            Order(1, 1, [1], "2025-08-01", [self.products[0]]),
-            Order(2, 1, [1, 2], "2025-08-02", self.products),
-            Order(3, 2, [2], "2025-08-03", [self.products[1]])
-        ]
-        for client in self.clients:
-            add_client(self.db_file, client)
-        for product in self.products:
-            add_product(self.db_file, product)
-        for order in self.orders:
-            add_order(self.db_file, order)
 
-    def tearDown(self):
-        """Удаляет временную БД после теста."""
-        if os.path.exists(self.db_file):
-            os.remove(self.db_file)
-
-    def test_top_clients(self):
-        """Проверяет топ клиентов по числу заказов."""
-        result = top_clients(self.db_file, n=2)
-        self.assertEqual(len(result), 2)
-        self.assertEqual(result[0]["client_name"], "Иван Иванов")
-        self.assertEqual(result[0]["order_count"], 2)
-        self.assertEqual(result[1]["client_name"], "Анна Петрова")
-        self.assertEqual(result[1]["order_count"], 1)
-
-    def test_sales_dynamics(self):
-        """Проверяет динамику заказов по датам."""
-        with patch("matplotlib.pyplot.savefig") as mocked_savefig:
-            result = sales_dynamics(self.db_file)
-            self.assertTrue(mocked_savefig.called)
-        expected = pd.DataFrame([
-            {"date": "2025-08-01", "total": 50000.0},
-            {"date": "2025-08-02", "total": 80000.0},
-            {"date": "2025-08-03", "total": 30000.0}
+    @patch("pandas.read_sql_query")
+    @patch("sqlite3.connect")
+    def test_top_clients(self, mock_connect, mock_read_sql):
+        """Проверяет топ клиентов."""
+        mock_read_sql.return_value = pd.DataFrame([
+            {"client_name": "Иван Иванов", "order_count": 2},
+            {"client_name": "Пётр Петров", "order_count": 1}
         ])
-        pd.testing.assert_frame_equal(
-            result.reset_index()[["date", "total"]],
-            expected,
-            check_dtype=False
+        result = top_clients(self.db_file, n=2)
+        self.assertEqual(result, [
+            {"client_name": "Иван Иванов", "order_count": 2},
+            {"client_name": "Пётр Петров", "order_count": 1}
+        ])
+        mock_connect.assert_called_once_with(self.db_file)
+        mock_read_sql.assert_called_once_with(
+            """
+    SELECT c.name AS client_name, COUNT(o.id) AS order_count
+    FROM clients c
+    LEFT JOIN orders o ON c.id = o.client_id
+    GROUP BY c.id, c.name
+    ORDER BY order_count DESC
+    LIMIT ?
+    """,
+            mock_connect.return_value,
+            params=(2,)
         )
 
-    def test_top_products(self):
-        """Проверяет топ товаров по количеству продаж."""
-        with patch("matplotlib.pyplot.savefig") as mocked_savefig:
-            result = top_products(self.db_file, n=2)
-            self.assertTrue(mocked_savefig.called)
-        self.assertEqual(len(result), 2)
-        self.assertEqual(result[0]["product_name"], "Ноутбук")
-        self.assertEqual(result[0]["sales_count"], 2)
-        self.assertEqual(result[1]["product_name"], "Телефон")
-        self.assertEqual(result[1]["sales_count"], 2)
+    @patch("pandas.read_sql_query")
+    @patch("sqlite3.connect")
+    def test_top_clients_empty(self, mock_connect, mock_read_sql):
+        """Проверяет топ клиентов при пустой базе."""
+        mock_read_sql.return_value = pd.DataFrame(columns=["client_name", "order_count"])
+        result = top_clients(self.db_file, n=5)
+        self.assertEqual(result, [])
+        mock_connect.assert_called_once_with(self.db_file)
+        mock_read_sql.assert_called_once()
 
-    def test_client_graph(self):
-        """Проверяет граф связей клиентов по общим товарам."""
-        with patch("matplotlib.pyplot.savefig") as mocked_savefig:
-            graph = client_graph(self.db_file)
-            self.assertTrue(mocked_savefig.called)
-        self.assertEqual(len(graph.nodes), 2)  # Два клиента
-        self.assertEqual(len(graph.edges), 2)  # Две связи (Ноутбук и Телефон)
+    @patch("pandas.read_sql_query")
+    @patch("sqlite3.connect")
+    def test_top_products(self, mock_connect, mock_read_sql):
+        """Проверяет топ товаров."""
+        mock_read_sql.return_value = pd.DataFrame([
+            {"product_name": "Ноутбук", "order_count": 3},
+            {"product_name": "Телефон", "order_count": 2}
+        ])
+        result = top_products(self.db_file, n=2)
+        self.assertEqual(result, [
+            {"product_name": "Ноутбук", "order_count": 3},
+            {"product_name": "Телефон", "order_count": 2}
+        ])
+        mock_connect.assert_called_once_with(self.db_file)
+        mock_read_sql.assert_called_once_with(
+            """
+    SELECT p.name AS product_name, COUNT(o.id) AS order_count
+    FROM products p
+    LEFT JOIN orders o ON o.id = p.id
+    GROUP BY p.id, p.name
+    ORDER BY order_count DESC
+    LIMIT ?
+    """,
+            mock_connect.return_value,
+            params=(2,)
+        )
+
+    @patch("pandas.read_sql_query")
+    @patch("sqlite3.connect")
+    def test_top_products_empty(self, mock_connect, mock_read_sql):
+        """Проверяет топ товаров при пустой базе."""
+        mock_read_sql.return_value = pd.DataFrame(columns=["product_name", "order_count"])
+        result = top_products(self.db_file, n=5)
+        self.assertEqual(result, [])
+        mock_connect.assert_called_once_with(self.db_file)
+        mock_read_sql.assert_called_once()
+
+    @patch("pandas.read_sql_query")
+    @patch("sqlite3.connect")
+    def test_sales_dynamics(self, mock_connect, mock_read_sql):
+        """Проверяет динамику продаж."""
+        mock_read_sql.return_value = pd.DataFrame([
+            {"date": "2025-08-16", "total": 50000.0},
+            {"date": "2025-08-17", "total": 30000.0}
+        ])
+        result = sales_dynamics(self.db_file)
+        expected = pd.DataFrame([
+            {"date": "2025-08-16", "total": 50000.0},
+            {"date": "2025-08-17", "total": 30000.0}
+        ])
+        pd.testing.assert_frame_equal(result, expected, check_dtype=False)
+        mock_connect.assert_called_once_with(self.db_file)
+        mock_read_sql.assert_called_once_with(
+            """
+    SELECT date, SUM(total) AS total
+    FROM orders
+    GROUP BY date
+    """,
+            mock_connect.return_value
+        )
+
+    @patch("pandas.read_sql_query")
+    @patch("sqlite3.connect")
+    def test_sales_dynamics_empty(self, mock_connect, mock_read_sql):
+        """Проверяет динамику продаж при пустой базе."""
+        mock_read_sql.return_value = pd.DataFrame(columns=["date", "total"])
+        result = sales_dynamics(self.db_file)
+        expected = pd.DataFrame(columns=["date", "total"])
+        pd.testing.assert_frame_equal(result, expected, check_dtype=False)
+        mock_connect.assert_called_once_with(self.db_file)
+        mock_read_sql.assert_called_once()
+
+    @patch("pandas.read_sql_query")
+    @patch("sqlite3.connect")
+    def test_client_graph(self, mock_connect, mock_read_sql):
+        """Проверяет граф клиентов."""
+        mock_read_sql.return_value = pd.DataFrame([
+            {"client1": 1, "client2": 2}
+        ])
+        result = client_graph(self.db_file)
+        self.assertEqual(list(result.nodes), [1, 2])
+        self.assertEqual(list(result.edges), [(1, 2)])
+        mock_connect.assert_called_once_with(self.db_file)
+        mock_read_sql.assert_called_once_with(
+            """
+    SELECT o1.client_id AS client1, o2.client_id AS client2
+    FROM orders o1
+    JOIN orders o2 ON o1.id = o2.id AND o1.client_id != o2.client_id
+    """,
+            mock_connect.return_value
+        )
+
+    @patch("pandas.read_sql_query")
+    @patch("sqlite3.connect")
+    def test_client_graph_empty(self, mock_connect, mock_read_sql):
+        """Проверяет граф клиентов при пустой базе."""
+        mock_read_sql.return_value = pd.DataFrame(columns=["client1", "client2"])
+        result = client_graph(self.db_file)
+        self.assertEqual(list(result.nodes), [])
+        self.assertEqual(list(result.edges), [])
+        mock_connect.assert_called_once_with(self.db_file)
+        mock_read_sql.assert_called_once()
 
 if __name__ == "__main__":
     unittest.main()

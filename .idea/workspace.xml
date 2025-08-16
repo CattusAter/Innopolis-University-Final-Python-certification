@@ -4,25 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="514a412a-cdeb-4c04-a565-0bca96aad27f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shop.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/analysis.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_db.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_models.py" afterDir="false" />
+    <list default="true" id="514a412a-cdeb-4c04-a565-0bca96aad27f" name="Changes" comment="Add module analysis.">
+      <change afterPath="$PROJECT_DIR$/test_gui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_analysis.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="repository" />
+    </option>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -34,6 +32,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "CattusAter"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/CattusAter/Innopolis-University-Final-Python-certification",
+    "accountId": "b6ae489f-fa2d-4a78-b250-cfffcb4aa5fb"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -48,8 +58,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python tests.Python tests for test_analysis.TestAnalysis.executor": "Run",
+    "Python tests.Python tests for test_analysis.TestAnalysis.test_client_graph.executor": "Run",
+    "Python tests.Python tests for test_analysis.TestAnalysis.test_sales_dynamics.executor": "Run",
+    "Python tests.Python tests for test_analysis.TestAnalysis.test_top_products.executor": "Run",
     "Python tests.Python tests for test_db.TestDatabase.executor": "Run",
     "Python tests.Python tests for test_db.TestDatabase.test_export_to_csv.executor": "Run",
+    "Python tests.Python tests for test_gui.TestStoreApp.executor": "Run",
     "Python tests.Python tests for test_models.TestClient.executor": "Run",
     "Python tests.Python tests for test_models.TestOrder.executor": "Run",
     "Python tests.Python tests for test_models.TestProduct.executor": "Run",
@@ -60,8 +75,8 @@
     "git-widget-placeholder": "master"
   }
 }]]></component>
-  <component name="RunManager" selected="Python tests.Python tests for test_db.TestDatabase">
-    <configuration name="Python tests for test_db.TestDatabase" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.Python tests for test_gui.TestStoreApp">
+    <configuration name="Python tests for test_analysis.TestAnalysis" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="shop" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -72,11 +87,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_db.TestDatabase&quot;" />
+      <option name="_new_target" value="&quot;test_analysis.TestAnalysis&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_db.TestDatabase.test_export_to_csv" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_analysis.TestAnalysis.test_client_graph" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="shop" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -87,11 +102,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_db.TestDatabase.test_export_to_csv&quot;" />
+      <option name="_new_target" value="&quot;test_analysis.TestAnalysis.test_client_graph&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_models.TestOrder" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_analysis.TestAnalysis.test_sales_dynamics" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="shop" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -102,11 +117,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_models.TestOrder&quot;" />
+      <option name="_new_target" value="&quot;test_analysis.TestAnalysis.test_sales_dynamics&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_models.TestProduct" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_analysis.TestAnalysis.test_top_products" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="shop" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -117,11 +132,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_models.TestProduct&quot;" />
+      <option name="_new_target" value="&quot;test_analysis.TestAnalysis.test_top_products&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests in test_db.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_gui.TestStoreApp" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="shop" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -132,17 +147,17 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/test_db.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <option name="_new_target" value="&quot;test_gui.TestStoreApp&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests for test_db.TestDatabase" />
-        <item itemvalue="Python tests.Python tests for test_db.TestDatabase.test_export_to_csv" />
-        <item itemvalue="Python tests.Python tests in test_db.py" />
-        <item itemvalue="Python tests.Python tests for test_models.TestOrder" />
-        <item itemvalue="Python tests.Python tests for test_models.TestProduct" />
+        <item itemvalue="Python tests.Python tests for test_gui.TestStoreApp" />
+        <item itemvalue="Python tests.Python tests for test_analysis.TestAnalysis" />
+        <item itemvalue="Python tests.Python tests for test_analysis.TestAnalysis.test_sales_dynamics" />
+        <item itemvalue="Python tests.Python tests for test_analysis.TestAnalysis.test_top_products" />
+        <item itemvalue="Python tests.Python tests for test_analysis.TestAnalysis.test_client_graph" />
       </list>
     </recent_temporary>
   </component>
@@ -161,6 +176,44 @@
       <option name="presentableId" value="Default" />
       <updated>1755352459347</updated>
     </task>
+    <task id="LOCAL-00001" summary="Initial commit (tests with errors)">
+      <option name="closed" value="true" />
+      <created>1755355225434</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1755355225434</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Initial commit (tests with errors)">
+      <option name="closed" value="true" />
+      <created>1755355491697</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1755355491697</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Initial commit (tests with errors)">
+      <option name="closed" value="true" />
+      <created>1755355753135</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1755355753135</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add module analysis.">
+      <option name="closed" value="true" />
+      <created>1755356888050</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1755356888050</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit (tests with errors)" />
+    <MESSAGE value="Add module analysis." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add module analysis." />
   </component>
 </project>
