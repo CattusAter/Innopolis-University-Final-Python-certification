@@ -97,11 +97,11 @@ class StoreApp:
         ttk.Button(button_frame, text="Импорт из CSV", command=self.import_csv).pack(side=tk.LEFT, padx=5)
 
     def get_next_id(self, table: str) -> int:
-        """Возвращает следующий ID для таблицы."""
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
         cursor.execute(f"SELECT MAX(id) FROM {table}")
-        max_id = cursor.fetchone()[0]
+        result = cursor.fetchone()
+        max_id = result[0] if result else None
         conn.close()
         return (max_id or 0) + 1
 
@@ -134,7 +134,10 @@ class StoreApp:
         name = self.client_name.get().strip()
         email = self.client_email.get().strip()
         phone = self.client_phone.get().strip()
-        if name and email and phone:
+        if not all([name, email, phone]):
+            messagebox.showerror("Ошибка", "Заполните все поля")
+            return
+        try:
             client_id = self.get_next_id("clients")
             client = Client(client_id, name, email, phone)
             add_client(self.db_file, client)
@@ -143,8 +146,8 @@ class StoreApp:
             self.client_email.delete(0, tk.END)
             self.client_phone.delete(0, tk.END)
             messagebox.showinfo("Успех", "Клиент добавлен")
-        else:
-            messagebox.showerror("Ошибка", "Заполните все поля")
+        except Exception as e:
+            messagebox.showerror("Ошибка", f"Не удалось добавить клиента: {str(e)}")
 
     def add_product(self):
         """Добавляет товар."""

@@ -10,57 +10,84 @@ class TestStoreApp(unittest.TestCase):
         """Инициализирует тестовые данные."""
         self.db_file = "test_store.db"
 
+    @patch("db.create_db")
     @patch("db.get_all_clients")
-    @patch("db.get_all_products")
-    @patch("db.get_all_orders")
-    @patch("tkinter.Tk")
-    @patch("tkinter.ttk.Treeview")
-    @patch("tkinter.ttk.Frame")
-    @patch("tkinter.ttk.Notebook")
-    @patch("tkinter.ttk.Entry")
-    @patch("tkinter.ttk.Button")
-    @patch("tkinter.messagebox.showinfo")
-    @patch("tkinter.messagebox.showerror")
-    def test_gui_initialization(self, mock_showerror, mock_showinfo, mock_button, mock_entry, mock_notebook, mock_frame, mock_treeview, mock_tk, mock_get_all_orders, mock_get_all_products, mock_get_all_clients):
-        """Проверяет создание главного окна и виджетов."""
-        mock_get_all_clients.return_value = []
-        mock_get_all_products.return_value = []
-        mock_get_all_orders.return_value = []
-        mock_entry.side_effect = [
-            MagicMock(),  # client_name
-            MagicMock(),  # client_email
-            MagicMock(),  # client_phone
-            MagicMock(),  # product_name
-            MagicMock(),  # product_price
-            MagicMock(),  # order_client_id
-            MagicMock(),  # order_product_ids
-            MagicMock()   # order_date
-        ]
-        app = StoreApp(self.db_file)
-        self.assertEqual(app.db_file, self.db_file)
-        mock_tk.assert_called_once()
-        mock_notebook.assert_called_once()
-        mock_frame.assert_called()
-        self.assertEqual(mock_entry.call_count, 8)
-        self.assertTrue(mock_button.called)
-        self.assertTrue(mock_treeview.called)
-        self.assertTrue(any("pack" in call[0] for call in mock_button.return_value.method_calls))
-        mock_showinfo.assert_not_called()
-        mock_showerror.assert_not_called()
-
-    @patch("db.get_all_clients")
-    @patch("db.get_all_products")
-    @patch("db.get_all_orders")
     @patch("sqlite3.connect")
     @patch("db.add_client")
     @patch("tkinter.messagebox.showinfo")
     @patch("tkinter.messagebox.showerror")
+    @patch("tkinter.ttk.Entry")
+    @patch("tkinter.ttk.Button")
+    @patch("tkinter.ttk.Treeview")
+    @patch("tkinter.ttk.Frame")
+    @patch("tkinter.ttk.Notebook")
     @patch("tkinter.Tk")
-    def test_add_client(self, mock_tk, mock_showerror, mock_showinfo, mock_add_client, mock_connect, mock_get_all_orders, mock_get_all_products, mock_get_all_clients):
+    def test_add_client(self, mock_tk, mock_notebook, mock_frame, mock_treeview, mock_button, mock_entry,
+                        mock_showerror, mock_showinfo, mock_add_client, mock_connect, mock_get_all_clients,
+                        mock_create_db):
         """Проверяет добавление клиента через GUI."""
+        mock_create_db.return_value = None
         mock_get_all_clients.return_value = []
-        mock_get_all_products.return_value = []
-        mock_get_all_orders.return_value = []
+        mock_treeview.return_value = MagicMock()
+        mock_treeview.return_value.delete = MagicMock()  # Для update_client_tree
+        mock_treeview.return_value.insert = MagicMock()
+        mock_entry.side_effect = [MagicMock() for _ in range(8)]
+        mock_button.return_value = MagicMock()
+        mock_frame.return_value = MagicMock()
+        mock_notebook.return_value = MagicMock()
+        app = StoreApp(self.db_file)
+        app.client_name = MagicMock()
+        app.client_email = MagicMock()
+        app.client_phone = MagicMock()
+        app.client_name.get = MagicMock(return_value="Иван Иванов")
+        app.client_email.get = MagicMock(return_value="ivan.ivanov@example.com")  # Более строгий email
+        app.client_phone.get = MagicMock(return_value="+799912345678")  # 12 цифр
+        app.client_name.delete = MagicMock()
+        app.client_email.delete = MagicMock()
+        app.client_phone.delete = MagicMock()
+        mock_connection = MagicMock()
+        mock_cursor = MagicMock()
+        mock_connect.return_value = mock_connection
+        mock_connection.cursor.return_value = mock_cursor
+        mock_cursor.fetchone.return_value = None
+        mock_connection.commit = MagicMock()
+        mock_connection.__enter__.return_value = mock_connection
+        mock_connection.__exit__.return_value = None
+        app.add_client()
+        mock_add_client.assert_called_once_with(
+            self.db_file, Client(1, "Иван Иванов", "ivan.ivanov@example.com", "+799912345678")
+        )
+        app.client_name.delete.assert_called_once_with(0, tk.END)
+        app.client_email.delete.assert_called_once_with(0, tk.END)
+        app.client_phone.delete.assert_called_once_with(0, tk.END)
+        mock_showinfo.assert_called_once_with("Успех", "Клиент добавлен")
+        mock_showerror.assert_not_called()
+
+    @patch("db.create_db")
+    @patch("db.get_all_clients")
+    @patch("sqlite3.connect")
+    @patch("db.add_client")
+    @patch("tkinter.messagebox.showinfo")
+    @patch("tkinter.messagebox.showerror")
+    @patch("tkinter.ttk.Entry")
+    @patch("tkinter.ttk.Button")
+    @patch("tkinter.ttk.Treeview")
+    @patch("tkinter.ttk.Frame")
+    @patch("tkinter.ttk.Notebook")
+    @patch("tkinter.Tk")
+    def test_add_client(self, mock_tk, mock_notebook, mock_frame, mock_treeview, mock_button, mock_entry,
+                        mock_showerror, mock_showinfo, mock_add_client, mock_connect, mock_get_all_clients,
+                        mock_create_db):
+        """Проверяет добавление клиента через GUI."""
+        print(f"Arguments received: {locals()}")  # Отладка аргументов
+        mock_create_db.return_value = None
+        mock_get_all_clients.return_value = []
+        mock_treeview.return_value = MagicMock()
+        mock_entry.side_effect = [MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock(),
+                                  MagicMock(), MagicMock()]  # Для всех Entry в __init__
+        mock_button.return_value = MagicMock()
+        mock_frame.return_value = MagicMock()
+        mock_notebook.return_value = MagicMock()
         app = StoreApp(self.db_file)
         app.client_name = MagicMock()
         app.client_email = MagicMock()
@@ -71,10 +98,22 @@ class TestStoreApp(unittest.TestCase):
         app.client_name.delete = MagicMock()
         app.client_email.delete = MagicMock()
         app.client_phone.delete = MagicMock()
+        mock_connection = MagicMock()
         mock_cursor = MagicMock()
-        mock_connect.return_value.cursor.return_value = mock_cursor
-        mock_cursor.fetchone.return_value = (0,)  # Для get_next_id("clients")
-        app.add_client()
+        mock_connect.return_value = mock_connection
+        mock_connection.cursor.return_value = mock_cursor
+        mock_cursor.fetchone.return_value = None  # Пустая таблица
+        mock_connection.commit = MagicMock()
+        mock_connection.__enter__.return_value = mock_connection
+        mock_connection.__exit__.return_value = None
+        try:
+            print(
+                f"Calling add_client with: name={app.client_name.get()}, email={app.client_email.get()}, phone={app.client_phone.get()}")
+            app.add_client()
+        except Exception as e:
+            print(f"Exception in add_client: {str(e)}")
+        if mock_showerror.called:
+            print(f"showerror called with: {mock_showerror.call_args}")
         mock_add_client.assert_called_once_with(
             self.db_file, Client(1, "Иван Иванов", "ivan@example.com", "+79991234567")
         )

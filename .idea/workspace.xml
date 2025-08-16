@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="514a412a-cdeb-4c04-a565-0bca96aad27f" name="Changes" comment="Add module analysis.">
-      <change afterPath="$PROJECT_DIR$/test_gui.py" afterDir="false" />
+    <list default="true" id="514a412a-cdeb-4c04-a565-0bca96aad27f" name="Changes" comment="Add module gui (Tests broken)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analysis.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_gui.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +63,8 @@
     "Python tests.Python tests for test_db.TestDatabase.executor": "Run",
     "Python tests.Python tests for test_db.TestDatabase.test_export_to_csv.executor": "Run",
     "Python tests.Python tests for test_gui.TestStoreApp.executor": "Run",
+    "Python tests.Python tests for test_gui.TestStoreApp.test_add_client.executor": "Run",
+    "Python tests.Python tests for test_gui.TestStoreApp.test_gui_initialization.executor": "Run",
     "Python tests.Python tests for test_models.TestClient.executor": "Run",
     "Python tests.Python tests for test_models.TestOrder.executor": "Run",
     "Python tests.Python tests for test_models.TestProduct.executor": "Run",
@@ -75,7 +75,7 @@
     "git-widget-placeholder": "master"
   }
 }]]></component>
-  <component name="RunManager" selected="Python tests.Python tests for test_gui.TestStoreApp">
+  <component name="RunManager" selected="Python tests.Python tests for test_gui.TestStoreApp.test_add_client">
     <configuration name="Python tests for test_analysis.TestAnalysis" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="shop" />
       <option name="ENV_FILES" value="" />
@@ -88,21 +88,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;test_analysis.TestAnalysis&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for test_analysis.TestAnalysis.test_client_graph" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="shop" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_analysis.TestAnalysis.test_client_graph&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -121,21 +106,6 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_analysis.TestAnalysis.test_top_products" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="shop" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_analysis.TestAnalysis.test_top_products&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <configuration name="Python tests for test_gui.TestStoreApp" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="shop" />
       <option name="ENV_FILES" value="" />
@@ -151,13 +121,43 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="Python tests for test_gui.TestStoreApp.test_add_client" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="shop" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_gui.TestStoreApp.test_add_client&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test_gui.TestStoreApp.test_gui_initialization" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="shop" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_gui.TestStoreApp.test_gui_initialization&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests for test_gui.TestStoreApp.test_add_client" />
+        <item itemvalue="Python tests.Python tests for test_gui.TestStoreApp.test_gui_initialization" />
         <item itemvalue="Python tests.Python tests for test_gui.TestStoreApp" />
         <item itemvalue="Python tests.Python tests for test_analysis.TestAnalysis" />
         <item itemvalue="Python tests.Python tests for test_analysis.TestAnalysis.test_sales_dynamics" />
-        <item itemvalue="Python tests.Python tests for test_analysis.TestAnalysis.test_top_products" />
-        <item itemvalue="Python tests.Python tests for test_analysis.TestAnalysis.test_client_graph" />
       </list>
     </recent_temporary>
   </component>
@@ -208,12 +208,32 @@
       <option name="project" value="LOCAL" />
       <updated>1755356888050</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Add module gui (Tests broken)">
+      <option name="closed" value="true" />
+      <created>1755364628632</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1755364628632</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit (tests with errors)" />
     <MESSAGE value="Add module analysis." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add module analysis." />
+    <MESSAGE value="Add module gui (Tests broken)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add module gui (Tests broken)" />
   </component>
 </project>
