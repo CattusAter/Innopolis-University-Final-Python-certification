@@ -69,7 +69,8 @@ class TestDatabase(unittest.TestCase):
     def test_export_to_csv(self):
         """Проверяет экспорт данных в CSV."""
         add_client(self.db_file, self.client)
-        add_product(self.db_file, self.product)
+        for product in self.products:
+            add_product(self.db_file, product)
         add_order(self.db_file, self.order)
         mock_files = {
             "clients.csv": mock_open().return_value,
@@ -84,8 +85,9 @@ class TestDatabase(unittest.TestCase):
             mock_files["clients.csv"].write.assert_any_call("1,Иван Иванов,ivan@example.com,+79991234567\r\n")
             mock_files["products.csv"].write.assert_any_call("id,name,price\r\n")
             mock_files["products.csv"].write.assert_any_call("1,Ноутбук,50000.0\r\n")
+            mock_files["products.csv"].write.assert_any_call("2,Телефон,30000.0\r\n")
             mock_files["orders.csv"].write.assert_any_call("id,client_id,product_ids,date,total\r\n")
-            mock_files["orders.csv"].write.assert_any_call("1,1,[1, 2],2025-08-16,80000.0\r\n")
+            mock_files["orders.csv"].write.assert_any_call("1,1,\"[1, 2]\",2025-08-16,80000.0\r\n")
 
     def test_import_from_csv(self):
         """Проверяет импорт данных из CSV."""
